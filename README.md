@@ -1,2 +1,2 @@
-# odd-api
-API for ODD website
+# contame-api
+API for Contame website
