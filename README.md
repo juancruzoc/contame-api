@@ -1,2 +1,2 @@
-# contame
-Contame is a personal accounting journal website.
+# odd-api
+API for ODD website
