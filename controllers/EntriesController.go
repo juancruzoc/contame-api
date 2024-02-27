@@ -16,9 +16,6 @@ func CreateEntry(c *gin.Context) {
 		return
 	}
 
-	var userID = c.GetUint("userid")
-	entry.UserID = userID
-
 	// Save the entry to the database
 	if err := initializers.DB.Create(&entry).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -34,12 +31,6 @@ func UpdateEntry(c *gin.Context) {
 	id := c.Param("id")
 
 	if err := initializers.DB.First(&entry, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Entry not found"})
-		return
-	}
-
-	var userID = c.GetUint("userid")
-	if entry.UserID != userID {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Entry not found"})
 		return
 	}
@@ -68,12 +59,6 @@ func DeleteEntry(c *gin.Context) {
 		return
 	}
 
-	var userID = c.GetUint("userid")
-	if entry.UserID != userID {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Entry not found"})
-		return
-	}
-
 	// Delete the entry from the database
 	if err := initializers.DB.Delete(&entry).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -86,9 +71,9 @@ func DeleteEntry(c *gin.Context) {
 // Handler to get all entries
 func GetAllEntries(c *gin.Context) {
 	var entries []models.Entry
-	var userID = c.GetUint("userid")
+	var journalID = c.Param("journal_id")
 
-	if err := initializers.DB.Where("user_id = ?", userID).Find(&entries).Error; err != nil {
+	if err := initializers.DB.Where("journal_id = ?", journalID).Find(&entries).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

@@ -9,7 +9,7 @@ import (
 // Entry represents an entry entity in the database
 type Entry struct {
 	gorm.Model
-	UserID      uint
+	JournalID   uint
 	Date        time.Time
 	Amount      float64
 	Income      bool
