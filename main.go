@@ -28,11 +28,17 @@ func main() {
 	r.PUT("/categories/:id", middleware.RequireAuth, controllers.UpdateCategory)
 	r.DELETE("/categories/:id", middleware.RequireAuth, controllers.DeleteCategory)
 
+	// Journals routes
+	r.POST("/journals", middleware.RequireAuth, controllers.CreateJournal)
+	r.PUT("/journals/:id", middleware.RequireAuth, controllers.UpdateJournal)
+	r.DELETE("/journals/:id", middleware.RequireAuth, controllers.DeleteJournal)
+	r.GET("/journals", middleware.RequireAuth, controllers.GetAllJournals)
+
 	// Entries routes
 	r.POST("/entries", middleware.RequireAuth, controllers.CreateEntry)
 	r.PUT("/entries/:id", middleware.RequireAuth, controllers.UpdateEntry)
 	r.DELETE("/entries/:id", middleware.RequireAuth, controllers.DeleteEntry)
-	r.GET("/entries", middleware.RequireAuth, controllers.GetAllEntries)
+	r.GET("/entries/:journal_id", middleware.RequireAuth, controllers.GetAllEntries)
 
 	r.Run()
 }
